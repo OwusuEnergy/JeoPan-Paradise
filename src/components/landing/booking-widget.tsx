@@ -5,12 +5,14 @@ import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { format } from "date-fns";
+import { format, addDays } from "date-fns";
 import {
   Calendar as CalendarIcon,
   Users,
   BedDouble,
   Loader2,
+  CheckCircle2,
+  XCircle,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -35,6 +37,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 
@@ -53,9 +56,26 @@ const bookingFormSchema = z.object({
 
 type BookingFormValues = z.infer<typeof bookingFormSchema>;
 
+type AvailabilityStatus = "available" | "unavailable" | "checking" | "idle";
+
+// Mock unavailable dates (e.g., a weekend in the near future)
+const getMockUnavailableDates = () => {
+  const today = new Date();
+  const nextFriday = new Date(today);
+  nextFriday.setDate(today.getDate() + ((5 - today.getDay() + 7) % 7));
+  return [
+    new Date(nextFriday),
+    addDays(nextFriday, 1),
+    addDays(nextFriday, 2),
+  ];
+};
+const unavailableDates = getMockUnavailableDates();
+
 export default function BookingWidget() {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
+  const [availability, setAvailability] = useState<AvailabilityStatus>("idle");
+  const [suggestedDate, setSuggestedDate] = useState<Date | null>(null);
 
   const form = useForm<BookingFormValues>({
     resolver: zodResolver(bookingFormSchema),
@@ -65,16 +85,41 @@ export default function BookingWidget() {
     },
   });
 
+  function checkAvailability(from: Date, to: Date): boolean {
+    const fromDay = new Date(from.setHours(0,0,0,0));
+    return !unavailableDates.some(unavailableDate => 
+      fromDay.getTime() === unavailableDate.getTime()
+    );
+  }
+
+  function getNextAvailableDate(from: Date): Date {
+      let nextDate = addDays(from, 1);
+      while(!checkAvailability(nextDate, addDays(nextDate, 1))) {
+        nextDate = addDays(nextDate, 1);
+      }
+      return nextDate;
+  }
+
   function onSubmit(data: BookingFormValues) {
     setIsLoading(true);
+    setAvailability("checking");
     console.log(data);
 
     setTimeout(() => {
+      const isAvailable = checkAvailability(data.dates.from, data.dates.to);
+      
+      if (isAvailable) {
+        setAvailability("available");
+        setSuggestedDate(null);
+        toast({
+          title: "Availability Checked!",
+          description: "Great news! Rooms are available for your selected dates.",
+        });
+      } else {
+        setAvailability("unavailable");
+        setSuggestedDate(getNextAvailableDate(data.dates.from));
+      }
       setIsLoading(false);
-      toast({
-        title: "Availability Checked!",
-        description: "Great news! Rooms are available for your selected dates.",
-      });
     }, 1500);
   }
 
@@ -200,10 +245,28 @@ export default function BookingWidget() {
               </div>
             </form>
           </Form>
+
+          {availability === 'available' && (
+            <Alert className="mt-4 border-green-500 text-green-700">
+              <CheckCircle2 className="h-4 w-4 !text-green-500" />
+              <AlertTitle>Rooms Available!</AlertTitle>
+              <AlertDescription>
+                Good news! We have rooms available for your selected dates. Proceed to booking.
+              </AlertDescription>
+            </Alert>
+          )}
+
+          {availability === 'unavailable' && suggestedDate && (
+             <Alert variant="destructive" className="mt-4">
+              <XCircle className="h-4 w-4" />
+              <AlertTitle>Unavailable Dates</AlertTitle>
+              <AlertDescription>
+                Unfortunately, we are fully booked for your selected dates. The next available check-in is {format(suggestedDate, "EEEE, LLL dd")}. Please try searching for new dates.
+              </AlertDescription>
+            </Alert>
+          )}
         </div>
       </div>
     </div>
   );
 }
-
-    
