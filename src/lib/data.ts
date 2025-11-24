@@ -40,7 +40,7 @@ export const rooms: Room[] = [
     name: "The Voyager's Bunk",
     type: "Dormitory",
     price: 45,
-    imageId: "room-dorm-1",
+    imageIds: ["room-dorm-1", "room-dorm-1a", "room-dorm-1b"],
     amenities: ["Shared Bathroom", "Locker", "A/C", "Reading Light"],
   },
   {
@@ -48,7 +48,7 @@ export const rooms: Room[] = [
     name: "The Social Sleeper",
     type: "Dormitory",
     price: 48,
-    imageId: "room-dorm-2",
+    imageIds: ["room-dorm-2", "room-dorm-2a", "room-dorm-2b"],
     amenities: ["Ensuite Bathroom", "Privacy Curtain", "Locker", "A/C"],
   },
   {
@@ -56,7 +56,7 @@ export const rooms: Room[] = [
     name: "The Bohemian Hideaway",
     type: "Private Room",
     price: 120,
-    imageId: "room-private-1",
+    imageIds: ["room-private-1", "room-private-1a", "room-private-1b"],
     amenities: ["Queen Bed", "Ensuite Bathroom", "Mini-fridge", "A/C", "Garden View"],
   },
   {
@@ -64,7 +64,7 @@ export const rooms: Room[] = [
     name: "The Garden Oasis",
     type: "Private Room",
     price: 135,
-    imageId: "room-private-2",
+    imageIds: ["room-private-2", "room-private-2a", "room-private-2b"],
     amenities: ["King Bed", "Ensuite Bathroom", "Smart TV", "A/C", "Balcony"],
   },
   {
@@ -72,7 +72,7 @@ export const rooms: Room[] = [
     name: "The Paradise Suite",
     type: "Suite",
     price: 250,
-    imageId: "room-suite-1",
+    imageIds: ["room-suite-1", "room-suite-1a", "room-suite-1b"],
     amenities: ["King Bed", "Living Area", "Kitchenette", "Rainfall Shower", "Ocean View"],
   },
   {
@@ -80,7 +80,7 @@ export const rooms: Room[] = [
     name: "The Luxe Loft",
     type: "Suite",
     price: 280,
-    imageId: "room-suite-2",
+    imageIds: ["room-suite-2", "room-suite-2a", "room-suite-2b"],
     amenities: ["Split-level", "King Bed", "Full Kitchen", "Soaking Tub", "Private Terrace"],
   },
 ];

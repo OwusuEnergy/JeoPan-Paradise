@@ -13,10 +13,34 @@
       "imageHint": "hostel dorm"
     },
     {
+      "id": "room-dorm-1a",
+      "description": "A different angle of the modern dorm room.",
+      "imageUrl": "https://images.unsplash.com/photo-1555930112-0159bcdc3fe5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxkb3JtJTIwcm9vbXxlbnwwfHx8fDE3NjM5MzY5NDJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "dorm room"
+    },
+    {
+      "id": "room-dorm-1b",
+      "description": "Close up on a bunk bed in the dorm.",
+      "imageUrl": "https://images.unsplash.com/photo-1709805619372-40de3f158e83?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8YnVuayUyMGJlZHxlbnwwfHx8fDE3NjM5NzQ4NjV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "bunk bed"
+    },
+    {
       "id": "room-dorm-2",
       "description": "Another view of a clean and stylish dorm room.",
       "imageUrl": "https://images.unsplash.com/photo-1676152466751-054c5cb0af27?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8aG9zdGVsJTIwYnVuayUyMGJlZHxlbnwwfHx8fDE3NjM5MDg3MzF8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "hostel bunk bed"
+    },
+    {
+      "id": "room-dorm-2a",
+      "description": "Social area within the dorm.",
+      "imageUrl": "https://images.unsplash.com/photo-1616180759411-6377a8c42307?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxkb3JtJTIwc29jaWFsJTIwYXJlYXxlbnwwfHx8fDE3NjM5NzQ4NjV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "dorm social area"
+    },
+    {
+      "id": "room-dorm-2b",
+      "description": "Lockers in the dorm room.",
+      "imageUrl": "https://images.unsplash.com/photo-1602523479577-61e539194ffe?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxob3N0ZWwlMjBsb2NrZXJzfGVufDB8fHx8MTc2Mzk3NDg2NXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "hostel lockers"
     },
     {
       "id": "room-private-1",
@@ -25,10 +49,34 @@
       "imageHint": "bohemian bedroom"
     },
     {
+      "id": "room-private-1a",
+      "description": "Desk area in the bohemian room.",
+      "imageUrl": "https://images.unsplash.com/photo-1723856016470-1b0b0cd2e409?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxib2hlbWlhbiUyMGRlc2t8ZW58MHx8fHwxNzYzOTc0ODY2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "bohemian desk"
+    },
+    {
+      "id": "room-private-1b",
+      "description": "View from the window of the bohemian room.",
+      "imageUrl": "https://images.unsplash.com/photo-1606682361830-560a35ed8ba0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxnYXJkZW4lMjB2aWV3fGVufDB8fHx8MTc2Mzk0ODQzN3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "garden view"
+    },
+    {
       "id": "room-private-2",
       "description": "A bright private room with a view of the garden.",
       "imageUrl": "https://images.unsplash.com/photo-1629140727571-9b5c6f6267b4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxob3RlbCUyMHJvb218ZW58MHx8fHwxNzYzOTcxNTgwfDA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "hotel room"
+    },
+    {
+      "id": "room-private-2a",
+      "description": "Balcony of the garden oasis room.",
+      "imageUrl": "https://images.unsplash.com/photo-1744408480093-04b32d279a0a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxyb29tJTIwYmFsY29ueXxlbnwwfHx8fDE3NjM5NzQ4NjV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "room balcony"
+    },
+    {
+      "id": "room-private-2b",
+      "description": "Ensuite bathroom for the garden oasis room.",
+      "imageUrl": "https://images.unsplash.com/photo-1600488999585-e4364713b90a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxtb2Rlcm4lMjBiYXRocm9vbXxlbnwwfHx8fDE3NjM5MDc1NjB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "modern bathroom"
     },
     {
       "id": "room-suite-1",
@@ -37,10 +85,34 @@
       "imageHint": "luxury suite"
     },
     {
+      "id": "room-suite-1a",
+      "description": "Living area of the paradise suite.",
+      "imageUrl": "https://images.unsplash.com/photo-1610873521448-4c25dd48c28f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8c3VpdGUlMjBsaXZpbmclMjByb29tfGVufDB8fHx8MTc2Mzk3NDg2NXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "suite living room"
+    },
+    {
+      "id": "room-suite-1b",
+      "description": "Ocean view from the paradise suite.",
+      "imageUrl": "https://images.unsplash.com/photo-1605184256745-9acb04c06ad7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxvY2VhbiUyMHZpZXd8ZW58MHx8fHwxNzYzOTQ3MTY0fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "ocean view"
+    },
+    {
       "id": "room-suite-2",
       "description": "The ensuite bathroom of a suite with a rainfall shower.",
       "imageUrl": "https://images.unsplash.com/photo-1564540583246-934409427776?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8bHV4dXJ5JTIwYmF0aHJvb218ZW58MHx8fHwxNzYzODk4MDM3fDA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "luxury bathroom"
+    },
+    {
+      "id": "room-suite-2a",
+      "description": "Kitchenette in the luxe loft.",
+      "imageUrl": "https://images.unsplash.com/photo-1759398430338-8057876edf61?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBraXRjaGVuZXR0ZXxlbnwwfHx8fDE3NjM5NzQ4NjV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "modern kitchenette"
+    },
+    {
+      "id": "room-suite-2b",
+      "description": "Private terrace of the luxe loft.",
+      "imageUrl": "https://images.unsplash.com/photo-1667157485464-382fab4519f5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxyb29mdG9wJTIwdGVycmFjZXxlbnwwfHx8fDE3NjM4OTgwMzd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "rooftop terrace"
     },
     {
       "id": "testimonial-avatar-1",
@@ -87,7 +159,7 @@
     {
       "id": "cta-background",
       "description": "A stunning sunset view from the hostel's rooftop bar.",
-      "imageUrl": "https://images.unsplash.com/photo-1617965215075-b1f768dc8a61?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxzdW5zZXQlMjB2aWV3fGVufDB8fHx8MTc2Mzk3MzY3MHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1617965215075-b1f768dc8a61?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxzdW5zZXQlMjB2aWV3fGVufDB8fHx8MTc2M5NzM2NzMHww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "sunset view"
     },
     {

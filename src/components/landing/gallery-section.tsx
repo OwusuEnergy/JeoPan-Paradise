@@ -7,6 +7,13 @@ import type { Room, RoomType } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import {
   Dialog,
   DialogContent,
   DialogHeader,
@@ -27,7 +34,9 @@ const roomTypes: ("All" | RoomType)[] = [
 ];
 
 const RoomCard = ({ room }: { room: Room }) => {
-  const image = findImage(room.imageId);
+  const image = findImage(room.imageIds[0]);
+  const galleryImages = room.imageIds.map(id => findImage(id)).filter(Boolean);
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -56,16 +65,27 @@ const RoomCard = ({ room }: { room: Room }) => {
       <DialogContent className="sm:max-w-3xl">
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           <div>
-            {image && (
-                <Image
-                    src={image.imageUrl}
-                    alt={room.name}
-                    width={800}
-                    height={600}
-                    className="rounded-lg object-cover"
-                    data-ai-hint={image.imageHint}
-                />
-            )}
+            <Carousel className="w-full">
+              <CarouselContent>
+                {galleryImages.map((img, index) => (
+                    img && (
+                    <CarouselItem key={index}>
+                      <div className="aspect-video relative">
+                        <Image
+                          src={img.imageUrl}
+                          alt={`${room.name} gallery image ${index + 1}`}
+                          fill
+                          className="rounded-lg object-cover"
+                          data-ai-hint={img.imageHint}
+                        />
+                      </div>
+                    </CarouselItem>
+                    )
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="left-2" />
+              <CarouselNext className="right-2" />
+            </Carousel>
           </div>
           <div className="flex flex-col">
             <DialogHeader>

@@ -13,7 +13,7 @@ export interface Room {
   name: string;
   type: RoomType;
   price: number;
-  imageId: string;
+  imageIds: string[];
   amenities: string[];
 }
 
