@@ -1,3 +1,124 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "hero-background",
+      "description": "Lush hostel common area with hammocks and happy travelers.",
+      "imageUrl": "https://images.unsplash.com/photo-1638828229405-8db92ff35af6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8aG9zdGVsJTIwY29tbW9uJTIwYXJlYXxlbnwwfHx8fDE3NjM5MzY5NDJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "hostel common area"
+    },
+    {
+      "id": "room-dorm-1",
+      "description": "A beautifully designed modern dorm room with bunk beds.",
+      "imageUrl": "https://images.unsplash.com/photo-1709805619372-40de3f158e83?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxob3N0ZWwlMjBkb3JtfGVufDB8fHx8MTc2Mzk3MzY3MHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "hostel dorm"
+    },
+    {
+      "id": "room-dorm-2",
+      "description": "Another view of a clean and stylish dorm room.",
+      "imageUrl": "https://images.unsplash.com/photo-1676152466751-054c5cb0af27?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8aG9zdGVsJTIwYnVuayUyMGJlZHxlbnwwfHx8fDE3NjM5MDg3MzF8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "hostel bunk bed"
+    },
+    {
+      "id": "room-private-1",
+      "description": "A cozy private room with a double bed and bohemian decor.",
+      "imageUrl": "https://images.unsplash.com/photo-1628304457639-3dd4ded74a8b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxib2hlbWlhbiUyMGJlZHJvb218ZW58MHx8fHwxNzYzOTI1MTA5fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "bohemian bedroom"
+    },
+    {
+      "id": "room-private-2",
+      "description": "A bright private room with a view of the garden.",
+      "imageUrl": "https://images.unsplash.com/photo-1629140727571-9b5c6f6267b4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxob3RlbCUyMHJvb218ZW58MHx8fHwxNzYzOTcxNTgwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "hotel room"
+    },
+    {
+      "id": "room-suite-1",
+      "description": "A luxurious suite with a king-sized bed and a sitting area.",
+      "imageUrl": "https://images.unsplash.com/photo-1723584961549-1971ff95181f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBzdWl0ZXxlbnwwfHx8fDE3NjM5NTAwMjZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "luxury suite"
+    },
+    {
+      "id": "room-suite-2",
+      "description": "The ensuite bathroom of a suite with a rainfall shower.",
+      "imageUrl": "https://images.unsplash.com/photo-1564540583246-934409427776?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8bHV4dXJ5JTIwYmF0aHJvb218ZW58MHx8fHwxNzYzODk4MDM3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "luxury bathroom"
+    },
+    {
+      "id": "testimonial-avatar-1",
+      "description": "Avatar for Sarah, a happy traveler.",
+      "imageUrl": "https://images.unsplash.com/flagged/photo-1559855603-ce4c8f480d76?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHx3b21hbiUyMHNtaWxpbmd8ZW58MHx8fHwxNzYzOTE3NjMxfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "woman smiling"
+    },
+    {
+      "id": "testimonial-avatar-2",
+      "description": "Avatar for Mike, an adventurous backpacker.",
+      "imageUrl": "https://images.unsplash.com/photo-1583195763986-0231686dcd43?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxtYW4lMjBwb3J0cmFpdHxlbnwwfHx8fDE3NjM5MjU3NzF8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "man portrait"
+    },
+    {
+      "id": "testimonial-avatar-3",
+      "description": "Avatar for Chloe, a digital nomad.",
+      "imageUrl": "https://images.unsplash.com/photo-1557053908-4793c484d06f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHx3b21hbiUyMHBvcnRyYWl0fGVufDB8fHx8MTc2Mzk1OTYyM3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "woman portrait"
+    },
+    {
+      "id": "experience-map",
+      "description": "An illustrated map of the local area.",
+      "imageUrl": "https://images.unsplash.com/photo-1742415105843-6a4719046907?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxpbGx1c3RyYXRlZCUyMG1hcHxlbnwwfHx8fDE3NjM5NzM2NzB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "illustrated map"
+    },
+    {
+      "id": "experience-beach",
+      "description": "A beautiful pristine beach near the hostel.",
+      "imageUrl": "https://images.unsplash.com/photo-1546536582-cdabb1daf509?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHx0cm9waWNhbCUyMGJlYWNofGVufDB8fHx8MTc2MzkxNzgxOHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "tropical beach"
+    },
+    {
+      "id": "experience-market",
+      "description": "A vibrant local market with fresh produce.",
+      "imageUrl": "https://images.unsplash.com/photo-1567131349667-933eb56baec0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxsb2NhbCUyMG1hcmtldHxlbnwwfHx8fDE3NjM5Njc0Mjh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "local market"
+    },
+    {
+      "id": "experience-hike",
+      "description": "A scenic hiking trail through lush jungle.",
+      "imageUrl": "https://images.unsplash.com/photo-1617129814284-f9cafb70a203?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxqdW5nbGUlMjB0cmFpbHxlbnwwfHx8fDE3NjM5NzM2NzB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "jungle trail"
+    },
+    {
+      "id": "cta-background",
+      "description": "A stunning sunset view from the hostel's rooftop bar.",
+      "imageUrl": "https://images.unsplash.com/photo-1617965215075-b1f768dc8a61?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxzdW5zZXQlMjB2aWV3fGVufDB8fHx8MTc2Mzk3MzY3MHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "sunset view"
+    },
+    {
+      "id": "blog-1",
+      "description": "Featured image for a blog post about local cuisine.",
+      "imageUrl": "https://images.unsplash.com/photo-1612927601601-6638404737ce?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxmb29kJTIwcGxhdGV8ZW58MHx8fHwxNzYzODY5NjU1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "food plate"
+    },
+    {
+      "id": "blog-2",
+      "description": "Featured image for a blog post about hidden gems.",
+      "imageUrl": "https://images.unsplash.com/photo-1564462369783-1860602c6386?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxoaWRkZW4lMjB3YXRlcmZhbGx8ZW58MHx8fHwxNzYzOTUxMDk5fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "hidden waterfall"
+    },
+    {
+      "id": "blog-3",
+      "description": "Featured image for a blog post about sustainable travel.",
+      "imageUrl": "https://images.unsplash.com/photo-1529718836725-f449d3a52881?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxlY28lMjB0cmF2ZWx8ZW58MHx8fHwxNzYzOTczNjcwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "eco travel"
+    },
+    {
+      "id": "pool-feature",
+      "description": "A relaxing swimming pool area.",
+      "imageUrl": "https://images.unsplash.com/photo-1566230555350-59683b1d16e0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxzd2ltbWluZyUyMHBvb2x8ZW58MHx8fHwxNzYzOTMyMzc0fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "swimming pool"
+    },
+    {
+      "id": "rooftop-bar-feature",
+      "description": "Rooftop bar with a view.",
+      "imageUrl": "https://images.unsplash.com/photo-1556463208-f8c2505e8299?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxyb29mdG9wJTIwYmFyfGVufDB8fHx8MTc2Mzg5OTQzNnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "rooftop bar"
+    }
+  ]
 }
