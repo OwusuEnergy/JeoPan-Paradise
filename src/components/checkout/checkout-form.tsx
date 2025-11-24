@@ -490,6 +490,7 @@ export default function CheckoutForm() {
             <CardTitle>Payment Details</CardTitle>
           </CardHeader>
           <CardContent>
+            <Form {...form}>
             <FormField
               control={form.control}
               name="paymentMethod"
@@ -501,10 +502,8 @@ export default function CheckoutForm() {
                       defaultValue={field.value}
                       className="grid grid-cols-2 gap-4"
                     >
-                      <FormItem>
-                        <FormControl>
-                          <RadioGroupItem value="card" id="card" className="peer sr-only" />
-                        </FormControl>
+                      <div>
+                        <RadioGroupItem value="card" id="card" className="peer sr-only" />
                         <Label
                           htmlFor="card"
                           className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
@@ -512,11 +511,9 @@ export default function CheckoutForm() {
                           <CreditCard className="mb-3 h-6 w-6" />
                           Credit/Debit Card
                         </Label>
-                      </FormItem>
-                      <FormItem>
-                        <FormControl>
-                          <RadioGroupItem value="momo" id="momo" className="peer sr-only" />
-                        </FormControl>
+                      </div>
+                      <div>
+                        <RadioGroupItem value="momo" id="momo" className="peer sr-only" />
                         <Label
                           htmlFor="momo"
                           className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
@@ -524,7 +521,7 @@ export default function CheckoutForm() {
                           <Smartphone className="mb-3 h-6 w-6" />
                           Mobile Money
                         </Label>
-                      </FormItem>
+                      </div>
                     </RadioGroup>
                   </FormControl>
                   <FormMessage />
@@ -614,6 +611,7 @@ export default function CheckoutForm() {
                 </div>
               )}
               </div>
+            </Form>
           </CardContent>
         </Card>
         
