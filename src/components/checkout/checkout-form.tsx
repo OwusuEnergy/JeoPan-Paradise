@@ -3,6 +3,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -23,15 +24,47 @@ import {
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/hooks/use-toast";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  BedDouble,
+  Calendar as CalendarIcon,
+  Users,
+} from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const checkoutFormSchema = z.object({
+  dates: z
+    .object({
+      from: z.date({ required_error: "Check-in date is required." }),
+      to: z.date({ required_error: "Check-out date is required." }),
+    })
+    .refine((data) => data.from && data.to, "Both dates are required"),
+  guests: z.string().min(1, "Please select number of guests."),
+  roomType: z.string().min(1, "Please select a room type."),
   firstName: z.string().min(1, "First name is required"),
   lastName: z.string().min(1, "Last name is required"),
   email: z.string().email("Invalid email address"),
   phone: z.string().min(1, "Phone number is required"),
   cardName: z.string().min(1, "Name on card is required"),
-  cardNumber: z.string().min(16, "Card number must be 16 digits").max(16, "Card number must be 16 digits"),
-  expiryDate: z.string().regex(/^(0[1-9]|1[0-2])\/?([0-9]{4}|[0-9]{2})$/, "Invalid expiry date (MM/YY)"),
+  cardNumber: z
+    .string()
+    .min(16, "Card number must be 16 digits")
+    .max(16, "Card number must be 16 digits"),
+  expiryDate: z
+    .string()
+    .regex(/^(0[1-9]|1[0-2])\/?([0-9]{4}|[0-9]{2})$/, "Invalid expiry date (MM/YY)"),
   cvc: z.string().min(3, "CVC must be 3 digits").max(4, "CVC can be up to 4 digits"),
 });
 
@@ -40,6 +73,8 @@ export default function CheckoutForm() {
   const form = useForm<z.infer<typeof checkoutFormSchema>>({
     resolver: zodResolver(checkoutFormSchema),
     defaultValues: {
+      guests: "2",
+      roomType: "The Bohemian Hideaway",
       firstName: "",
       lastName: "",
       email: "",
@@ -51,6 +86,9 @@ export default function CheckoutForm() {
     },
   });
 
+  const watchDates = form.watch("dates");
+  const watchGuests = form.watch("guests");
+
   function onSubmit(values: z.infer<typeof checkoutFormSchema>) {
     console.log(values);
     toast({
@@ -59,6 +97,21 @@ export default function CheckoutForm() {
     });
     form.reset();
   }
+
+  const calculateNights = () => {
+    if (watchDates?.from && watchDates?.to) {
+      const diffTime = Math.abs(watchDates.to.getTime() - watchDates.from.getTime());
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      return diffDays > 0 ? diffDays : 1;
+    }
+    return 0;
+  }
+
+  const nights = calculateNights();
+  const pricePerNight = 120; // Example price
+  const subtotal = nights * pricePerNight;
+  const taxes = subtotal * 0.13;
+  const total = subtotal + taxes;
 
   return (
     <div className="grid grid-cols-1 gap-12 md:grid-cols-2">
@@ -69,6 +122,112 @@ export default function CheckoutForm() {
         <CardContent>
           <Form {...form}>
             <form id="checkout-form" onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <FormField
+                  control={form.control}
+                  name="dates"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col">
+                      <FormLabel>Check-in / Check-out</FormLabel>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <FormControl>
+                            <Button
+                              variant={"outline"}
+                              className={cn(
+                                "w-full justify-start text-left font-normal",
+                                !field.value?.from && "text-muted-foreground"
+                              )}
+                            >
+                              <CalendarIcon className="mr-2 h-4 w-4" />
+                              {field.value?.from ? (
+                                field.value.to ? (
+                                  <>
+                                    {format(field.value.from, "LLL dd, y")} -{" "}
+                                    {format(field.value.to, "LLL dd, y")}
+                                  </>
+                                ) : (
+                                  format(field.value.from, "LLL dd, y")
+                                )
+                              ) : (
+                                <span>Pick a date range</span>
+                              )}
+                            </Button>
+                          </FormControl>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0" align="start">
+                          <Calendar
+                            initialFocus
+                            mode="range"
+                            defaultMonth={field.value?.from}
+                            selected={{
+                              from: field.value?.from,
+                              to: field.value?.to,
+                            }}
+                            onSelect={field.onChange}
+                            numberOfMonths={1}
+                            disabled={(date) =>
+                              date < new Date(new Date().setHours(0, 0, 0, 0))
+                            }
+                          />
+                        </PopoverContent>
+                      </Popover>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                 <FormField
+                  control={form.control}
+                  name="guests"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Guests</FormLabel>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger>
+                            <Users className="mr-2 h-4 w-4" />
+                            <SelectValue placeholder="Select guests" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {[...Array(8)].map((_, i) => (
+                            <SelectItem key={i + 1} value={String(i + 1)}>
+                              {i + 1} Guest{i > 0 && "s"}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+               <FormField
+                  control={form.control}
+                  name="roomType"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Room Type</FormLabel>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                         <FormControl>
+                           <SelectTrigger>
+                            <BedDouble className="mr-2 h-4 w-4" />
+                            <SelectValue placeholder="Select a room type" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="The Voyager's Bunk">Dormitory - The Voyager's Bunk</SelectItem>
+                          <SelectItem value="The Social Sleeper">Dormitory - The Social Sleeper</SelectItem>
+                          <SelectItem value="The Bohemian Hideaway">Private Room - The Bohemian Hideaway</SelectItem>
+                          <SelectItem value="The Garden Oasis">Private Room - The Garden Oasis</SelectItem>
+                          <SelectItem value="The Paradise Suite">Suite - The Paradise Suite</SelectItem>
+                          <SelectItem value="The Luxe Loft">Suite - The Luxe Loft</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
               <div className="grid grid-cols-2 gap-4">
                 <FormField
                   control={form.control}
@@ -132,36 +291,40 @@ export default function CheckoutForm() {
         <Card>
             <CardHeader>
                 <CardTitle>Booking Summary</CardTitle>
-                <CardDescription>The Bohemian Hideaway</CardDescription>
+                <CardDescription>{form.getValues("roomType")}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
                 <div className="flex justify-between">
                     <span>Check-in:</span>
-                    <span>July 25, 2024</span>
+                    <span>{watchDates?.from ? format(watchDates.from, "LLL dd, yyyy") : 'N/A'}</span>
                 </div>
                 <div className="flex justify-between">
                     <span>Check-out:</span>
-                    <span>July 29, 2024</span>
+                    <span>{watchDates?.to ? format(watchDates.to, "LLL dd, yyyy") : 'N/A'}</span>
                 </div>
                 <div className="flex justify-between">
                     <span>Guests:</span>
-                    <span>2 Adults</span>
+                    <span>{watchGuests} Adult{parseInt(watchGuests) > 1 ? 's' : ''}</span>
                 </div>
                 <Separator />
+                {nights > 0 && (
+                <>
                 <div className="flex justify-between font-semibold">
-                    <span>4 nights</span>
-                    <span>GHS480.00</span>
+                    <span>{nights} night{nights > 1 && 's'}</span>
+                    <span>GHS{subtotal.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between">
                     <span className="text-muted-foreground">Taxes & Fees</span>
-                    <span className="text-muted-foreground">GHS62.40</span>
+                    <span className="text-muted-foreground">GHS{taxes.toFixed(2)}</span>
                 </div>
+                </>
+                )}
             </CardContent>
             <CardFooter className="flex-col items-stretch space-y-4">
                 <Separator />
                 <div className="flex justify-between text-xl font-bold">
                     <span>Total</span>
-                    <span>GHS542.40</span>
+                    <span>GHS{total.toFixed(2)}</span>
                 </div>
             </CardFooter>
         </Card>
@@ -238,4 +401,3 @@ export default function CheckoutForm() {
       </div>
     </div>
   );
-}
