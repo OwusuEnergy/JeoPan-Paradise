@@ -104,13 +104,20 @@ const getMockUnavailableDates = () => {
 };
 const unavailableDates = getMockUnavailableDates();
 
-export default function CheckoutForm() {
+interface CheckoutFormProps {
+  preselectedRoom?: string | null;
+}
+
+export default function CheckoutForm({ preselectedRoom }: CheckoutFormProps) {
   const { toast } = useToast();
+  
+  const defaultRoom = rooms.find(r => r.name === preselectedRoom)?.name || "The Bohemian Hideaway";
+
   const form = useForm<z.infer<typeof checkoutFormSchema>>({
     resolver: zodResolver(checkoutFormSchema),
     defaultValues: {
       guests: "2",
-      roomType: "The Bohemian Hideaway",
+      roomType: defaultRoom,
       firstName: "",
       lastName: "",
       email: "",

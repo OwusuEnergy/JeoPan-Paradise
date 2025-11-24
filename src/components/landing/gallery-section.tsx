@@ -116,7 +116,7 @@ const RoomCard = ({ room }: { room: Room }) => {
               ))}
             </ul>
             <Button size="lg" variant="destructive" className="mt-auto" asChild>
-                <Link href="/checkout">Book Now</Link>
+                <Link href={`/checkout?roomType=${encodeURIComponent(room.name)}`}>Book Now</Link>
             </Button>
           </div>
         </div>

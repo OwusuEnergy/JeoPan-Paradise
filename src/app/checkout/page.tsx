@@ -1,11 +1,17 @@
+
 "use client";
 
+import { Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 import CheckoutForm from "@/components/checkout/checkout-form";
 import { cn } from "@/lib/utils";
 
-export default function CheckoutPage() {
+function CheckoutContent() {
+  const searchParams = useSearchParams();
+  const roomType = searchParams.get('roomType');
+
   return (
     <div className="flex min-h-dvh flex-col bg-background">
       <Header />
@@ -20,11 +26,20 @@ export default function CheckoutPage() {
             </p>
           </div>
           <div className="mt-12">
-            <CheckoutForm />
+            <CheckoutForm preselectedRoom={roomType} />
           </div>
         </div>
       </main>
       <Footer />
     </div>
+  );
+}
+
+
+export default function CheckoutPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <CheckoutContent />
+    </Suspense>
   );
 }
