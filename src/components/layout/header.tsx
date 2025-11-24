@@ -10,6 +10,9 @@ import {
   SheetContent,
   SheetTrigger,
   SheetClose,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
 } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import { navLinks } from "@/lib/data";
@@ -74,17 +77,22 @@ export default function Header() {
               </Button>
             </SheetTrigger>
             <SheetContent side="right">
-              <div className="flex flex-col gap-6 p-6">
-                <Link
-                  href="/"
-                  className="flex items-center gap-2"
-                  prefetch={false}
-                >
-                  <Palmtree className="h-6 w-6 text-primary" />
-                  <span className="font-headline text-lg font-semibold">
-                    Jeopan Paradise
-                  </span>
-                </Link>
+              <SheetHeader className="p-6">
+                <SheetTitle>
+                  <Link
+                    href="/"
+                    className="flex items-center gap-2"
+                    prefetch={false}
+                  >
+                    <Palmtree className="h-6 w-6 text-primary" />
+                    <span className="font-headline text-lg font-semibold">
+                      Jeopan Paradise
+                    </span>
+                  </Link>
+                </SheetTitle>
+                <SheetDescription className="sr-only">Main navigation menu</SheetDescription>
+              </SheetHeader>
+              <div className="flex flex-col gap-6 px-6">
                 <nav className="flex flex-col gap-4">
                   {navLinks.map((link) => {
                      const href = link.href.startsWith("#") && pathname !== "/" ? `/${link.href}` : link.href;
