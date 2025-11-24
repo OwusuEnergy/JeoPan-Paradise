@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useRef } from "react";
@@ -103,7 +104,7 @@ const RoomCard = ({ room }: { room: Room }) => {
               <DialogTitle className={cn("font-headline text-3xl mt-2")}>{room.name}</DialogTitle>
             </DialogHeader>
             <p className="mt-4 text-3xl font-semibold text-primary">
-              GHS{room.price}
+              GH₵{room.price}
               <span className="text-sm font-normal text-muted-foreground">/night</span>
             </p>
             <DialogDescription className="mt-4 text-base">

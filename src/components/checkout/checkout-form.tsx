@@ -361,12 +361,12 @@ export default function CheckoutForm() {
                 {nights > 0 && selectedRoom ? (
                 <>
                 <div className="flex justify-between font-semibold">
-                    <span>{nights} night{nights > 1 && 's'} x GHS{pricePerNight.toFixed(2)}</span>
-                    <span>GHS{subtotal.toFixed(2)}</span>
+                    <span>{nights} night{nights > 1 && 's'} x GH₵{pricePerNight.toFixed(2)}</span>
+                    <span>GH₵{subtotal.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between">
                     <span className="text-muted-foreground">Taxes & Fees (13%)</span>
-                    <span className="text-muted-foreground">GHS{taxes.toFixed(2)}</span>
+                    <span className="text-muted-foreground">GH₵{taxes.toFixed(2)}</span>
                 </div>
                 </>
                 ) : (
@@ -379,7 +379,7 @@ export default function CheckoutForm() {
                 <Separator />
                 <div className="flex justify-between text-xl font-bold">
                     <span>Total</span>
-                    <span>GHS{total.toFixed(2)}</span>
+                    <span>GH₵{total.toFixed(2)}</span>
                 </div>
             </CardFooter>
         </Card>
@@ -457,5 +457,3 @@ export default function CheckoutForm() {
     </div>
   );
 }
-
-    
