@@ -356,7 +356,7 @@ export default function CheckoutForm() {
                     <FormItem>
                       <FormLabel>First Name</FormLabel>
                       <FormControl>
-                        <Input placeholder="John" {...field} />
+                        <Input placeholder="First Name" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -369,7 +369,7 @@ export default function CheckoutForm() {
                     <FormItem>
                       <FormLabel>Last Name</FormLabel>
                       <FormControl>
-                        <Input placeholder="Doe" {...field} />
+                        <Input placeholder="Last Name" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -383,7 +383,7 @@ export default function CheckoutForm() {
                   <FormItem>
                     <FormLabel>Email Address</FormLabel>
                     <FormControl>
-                      <Input placeholder="john.doe@example.com" {...field} />
+                      <Input placeholder="your@email.com" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -396,7 +396,7 @@ export default function CheckoutForm() {
                   <FormItem>
                     <FormLabel>Phone Number</FormLabel>
                     <FormControl>
-                      <Input placeholder="+1 (234) 567-890" {...field} />
+                      <Input placeholder="Phone Number" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -480,7 +480,7 @@ export default function CheckoutForm() {
                     <FormItem>
                       <FormLabel>Name on Card</FormLabel>
                       <FormControl>
-                        <Input placeholder="John M. Doe" {...field} />
+                        <Input placeholder="Name on Card" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
