@@ -111,7 +111,7 @@ interface CheckoutFormProps {
 export default function CheckoutForm({ preselectedRoom }: CheckoutFormProps) {
   const { toast } = useToast();
   
-  const defaultRoom = rooms.find(r => r.name === preselectedRoom)?.name || "The Bohemian Hideaway";
+  const defaultRoom = rooms.find(r => r.name === preselectedRoom)?.name || "";
 
   const form = useForm<z.infer<typeof checkoutFormSchema>>({
     resolver: zodResolver(checkoutFormSchema),
@@ -362,6 +362,7 @@ export default function CheckoutForm({ preselectedRoom }: CheckoutFormProps) {
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
+                          <SelectItem value="None" disabled>None</SelectItem>
                           {rooms.map(room => (
                             <SelectItem key={room.id} value={room.name}>
                               {room.type} - {room.name}

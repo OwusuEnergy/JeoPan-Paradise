@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -86,7 +86,7 @@ export default function BookingWidget() {
     resolver: zodResolver(bookingFormSchema),
     defaultValues: {
       guests: "2",
-      roomType: "Private Room",
+      roomType: "",
     },
   });
 
@@ -227,6 +227,7 @@ export default function BookingWidget() {
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
+                            <SelectItem value="None" disabled>None</SelectItem>
                             <SelectItem value="Dormitory">Dormitory</SelectItem>
                             <SelectItem value="Private Room">Private Room</SelectItem>
                             <SelectItem value="Suite">Suite</SelectItem>
