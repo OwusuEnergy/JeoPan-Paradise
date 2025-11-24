@@ -90,6 +90,9 @@
   .glow {
     box-shadow: 0 0 10px hsl(var(--destructive)), 0 0 20px hsl(var(--destructive) / 0.8), 0 0 30px hsl(var(--destructive) / 0.6);
   }
+  .liquid-glass {
+    filter: url(#liquid-glass-filter);
+  }
 }
 
 @keyframes pulse-glow {
@@ -105,4 +108,39 @@
 
 .animate-pulse-glow {
   animation: pulse-glow 2.5s infinite ease-in-out;
+}
+
+
+@keyframes move-blob-1 {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(30vw, 20vh) scale(1.2); }
+  50% { transform: translate(-20vw, 40vh); }
+  75% { transform: translate(10vw, -10vh) scale(0.8); }
+  100% { transform: translate(0, 0); }
+}
+
+@keyframes move-blob-2 {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(-25vw, 15vh) scale(0.9); }
+  50% { transform: translate(20vw, -30vh); }
+  75% { transform: translate(-15vw, 25vh) scale(1.1); }
+  100% { transform: translate(0, 0); }
+}
+
+@keyframes move-blob-3 {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(15vw, -25vh) scale(1.1); }
+  50% { transform: translate(-20vw, 20vh); }
+  75% { transform: translate(25vw, -10vh) scale(0.9); }
+  100% { transform: translate(0, 0); }
+}
+
+.blob-1 {
+  animation: move-blob-1 45s infinite ease-in-out;
+}
+.blob-2 {
+  animation: move-blob-2 55s infinite ease-in-out;
+}
+.blob-3 {
+  animation: move-blob-3 50s infinite ease-in-out;
 }

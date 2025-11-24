@@ -20,7 +20,12 @@ export default function HeroSection() {
             data-ai-hint={heroImage.imageHint}
           />
         )}
-        <div className="absolute inset-0 bg-black/50" />
+        <div className="absolute inset-0 bg-black/30" />
+        <div className="absolute inset-0 liquid-glass">
+            <div className="absolute top-1/4 left-1/4 h-72 w-72 rounded-full bg-primary/20 blob-1" />
+            <div className="absolute top-1/2 right-1/4 h-80 w-80 rounded-full bg-accent/20 blob-2" />
+            <div className="absolute bottom-1/4 left-1/3 h-64 w-64 rounded-full bg-secondary/20 blob-3" />
+        </div>
       </div>
       <div className="relative z-10 flex h-full flex-col items-center justify-center text-center text-white">
         <div className="animate-in fade-in slide-in-from-bottom-12 duration-1000">

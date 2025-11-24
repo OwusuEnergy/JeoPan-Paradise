@@ -36,6 +36,20 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
       </head>
       <body className={cn("font-body antialiased", fontInter.variable, fontPlayfairDisplay.variable)}>
+        <svg className="absolute w-0 h-0">
+          <defs>
+            <filter id="liquid-glass-filter">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="25" result="blur" />
+              <feColorMatrix
+                in="blur"
+                mode="matrix"
+                values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7"
+                result="contrast"
+              />
+              <feBlend in="SourceGraphic" in2="contrast" />
+            </filter>
+          </defs>
+        </svg>
         {children}
         <Toaster />
       </body>
