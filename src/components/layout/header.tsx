@@ -29,15 +29,18 @@ export default function Header() {
 
   const NavLinkItems = () => (
     <>
-      {navLinks.map((link) => (
-        <Link
-          key={link.href}
-          href={isHomePage ? link.href : `/${link.href}`}
-          className="text-sm font-medium transition-colors hover:text-primary"
-        >
-          {link.label}
-        </Link>
-      ))}
+      {navLinks.map((link) => {
+        const href = isHomePage || link.href === '/' ? link.href : `/${link.href}`;
+        return (
+          <Link
+            key={link.href}
+            href={href}
+            className="text-sm font-medium transition-colors hover:text-primary"
+          >
+            {link.label}
+          </Link>
+        );
+      })}
     </>
   );
 
@@ -84,16 +87,19 @@ export default function Header() {
                   </span>
                 </Link>
                 <nav className="flex flex-col gap-4">
-                  {navLinks.map((link) => (
+                  {navLinks.map((link) => {
+                    const href = isHomePage || link.href === '/' ? link.href : `/${link.href}`;
+                    return (
                      <SheetClose asChild key={link.href}>
                         <Link
-                          href={isHomePage ? link.href : `/${link.href}`}
+                          href={href}
                           className="text-lg font-medium transition-colors hover:text-primary"
                         >
                           {link.label}
                         </Link>
                       </SheetClose>
-                  ))}
+                    );
+                   })}
                 </nav>
                  <SheetClose asChild>
                     <Button variant="destructive" size="lg" asChild>
