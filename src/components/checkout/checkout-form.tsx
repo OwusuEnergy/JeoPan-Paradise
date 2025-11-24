@@ -109,7 +109,7 @@ export default function CheckoutForm() {
     if (watchDates?.from && watchDates?.to) {
       const diffTime = Math.abs(watchDates.to.getTime() - watchDates.from.getTime());
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-      return diffDays > 0 ? diffDays : 1;
+      return diffDays > 0 ? diffDays : 0;
     }
     return 0;
   }
@@ -326,17 +326,21 @@ export default function CheckoutForm() {
                     <span>{watchGuests} Adult{parseInt(watchGuests) > 1 ? 's' : ''}</span>
                 </div>
                 <Separator />
-                {nights > 0 && (
+                {nights > 0 && selectedRoom ? (
                 <>
                 <div className="flex justify-between font-semibold">
                     <span>{nights} night{nights > 1 && 's'} x GHS{pricePerNight.toFixed(2)}</span>
                     <span>GHS{subtotal.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between">
-                    <span className="text-muted-foreground">Taxes & Fees</span>
+                    <span className="text-muted-foreground">Taxes & Fees (13%)</span>
                     <span className="text-muted-foreground">GHS{taxes.toFixed(2)}</span>
                 </div>
                 </>
+                ) : (
+                  <div className="text-center text-muted-foreground py-4">
+                    Please select your dates to see the price breakdown.
+                  </div>
                 )}
             </CardContent>
             <CardFooter className="flex-col items-stretch space-y-4">
@@ -420,5 +424,4 @@ export default function CheckoutForm() {
       </div>
     </div>
   );
-
-    
+}
