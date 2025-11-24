@@ -25,6 +25,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/hooks/use-toast";
 import {
@@ -46,10 +47,13 @@ import {
   Users,
   CheckCircle2,
   XCircle,
+  CreditCard,
+  Smartphone,
 } from "lucide-react";
 import { cn, findImage } from "@/lib/utils";
 import { rooms } from "@/lib/data";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
+import { Label } from "../ui/label";
 
 const checkoutFormSchema = z.object({
   checkin: z.date({ required_error: "Check-in date is required." }),
@@ -60,19 +64,31 @@ const checkoutFormSchema = z.object({
   lastName: z.string().min(1, "Last name is required"),
   email: z.string().email("Invalid email address"),
   phone: z.string().min(1, "Phone number is required"),
-  cardName: z.string().min(1, "Name on card is required"),
-  cardNumber: z
-    .string()
-    .min(16, "Card number must be 16 digits")
-    .max(16, "Card number must be 16 digits"),
-  expiryDate: z
-    .string()
-    .regex(/^(0[1-9]|1[0-2])\/?([0-9]{4}|[0-9]{2})$/, "Invalid expiry date (MM/YY)"),
-  cvc: z.string().min(3, "CVC must be 3 digits").max(4, "CVC can be up to 4 digits"),
+  paymentMethod: z.enum(["card", "momo"], {
+    required_error: "You need to select a payment method.",
+  }),
+  cardName: z.string().optional(),
+  cardNumber: z.string().optional(),
+  expiryDate: z.string().optional(),
+  cvc: z.string().optional(),
+  mobileMoneyNumber: z.string().optional(),
 }).refine(data => data.checkout > data.checkin, {
   message: "Check-out date must be after check-in date.",
   path: ["checkout"],
+}).superRefine((data, ctx) => {
+    if (data.paymentMethod === 'card') {
+      if (!data.cardName) ctx.addIssue({ code: z.ZodIssueCode.custom, message: "Name on card is required", path: ["cardName"] });
+      if (!data.cardNumber || !/^\d{16}$/.test(data.cardNumber)) ctx.addIssue({ code: z.ZodIssueCode.custom, message: "Card number must be 16 digits", path: ["cardNumber"] });
+      if (!data.expiryDate || !/^(0[1-9]|1[0-2])\/?([0-9]{2})$/.test(data.expiryDate)) ctx.addIssue({ code: z.ZodIssueCode.custom, message: "Invalid expiry date (MM/YY)", path: ["expiryDate"] });
+      if (!data.cvc || !/^\d{3,4}$/.test(data.cvc)) ctx.addIssue({ code: z.ZodIssueCode.custom, message: "CVC must be 3-4 digits", path: ["cvc"] });
+    }
+    if (data.paymentMethod === 'momo') {
+      if (!data.mobileMoneyNumber || !/^\d{10}$/.test(data.mobileMoneyNumber)) {
+        ctx.addIssue({ code: z.ZodIssueCode.custom, message: "Please enter a valid 10-digit mobile money number.", path: ["mobileMoneyNumber"] });
+      }
+    }
 });
+
 
 type AvailabilityStatus = "available" | "unavailable" | "idle";
 
@@ -99,10 +115,12 @@ export default function CheckoutForm() {
       lastName: "",
       email: "",
       phone: "",
+      paymentMethod: "card",
       cardName: "",
       cardNumber: "",
       expiryDate: "",
       cvc: "",
+      mobileMoneyNumber: "",
     },
   });
 
@@ -110,6 +128,7 @@ export default function CheckoutForm() {
   const watchCheckout = form.watch("checkout");
   const watchGuests = form.watch("guests");
   const watchRoomType = form.watch("roomType");
+  const watchPaymentMethod = form.watch("paymentMethod");
 
   const selectedRoom = rooms.find(room => room.name === watchRoomType);
   const roomImage = selectedRoom ? findImage(selectedRoom.imageIds[0]) : null;
@@ -471,64 +490,130 @@ export default function CheckoutForm() {
             <CardTitle>Payment Details</CardTitle>
           </CardHeader>
           <CardContent>
-            <Form {...form}>
-              <form className="space-y-4">
-                 <FormField
-                  control={form.control}
-                  name="cardName"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Name on Card</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Name on Card" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                 <FormField
-                  control={form.control}
-                  name="cardNumber"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Card Number</FormLabel>
-                      <FormControl>
-                        <Input placeholder="•••• •••• •••• ••••" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <div className="grid grid-cols-2 gap-4">
-                   <FormField
+            <FormField
+              control={form.control}
+              name="paymentMethod"
+              render={({ field }) => (
+                <FormItem className="space-y-3">
+                  <FormControl>
+                    <RadioGroup
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                      className="grid grid-cols-2 gap-4"
+                    >
+                      <FormItem>
+                        <FormControl>
+                          <RadioGroupItem value="card" id="card" className="peer sr-only" />
+                        </FormControl>
+                        <Label
+                          htmlFor="card"
+                          className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
+                        >
+                          <CreditCard className="mb-3 h-6 w-6" />
+                          Credit/Debit Card
+                        </Label>
+                      </FormItem>
+                      <FormItem>
+                        <FormControl>
+                          <RadioGroupItem value="momo" id="momo" className="peer sr-only" />
+                        </FormControl>
+                        <Label
+                          htmlFor="momo"
+                          className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
+                        >
+                          <Smartphone className="mb-3 h-6 w-6" />
+                          Mobile Money
+                        </Label>
+                      </FormItem>
+                    </RadioGroup>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+             <div className="mt-6 space-y-4">
+              {watchPaymentMethod === "card" && (
+                <div className="space-y-4 animate-in fade-in-0 duration-500">
+                  <FormField
                     control={form.control}
-                    name="expiryDate"
+                    name="cardName"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Expiry Date</FormLabel>
+                        <FormLabel>Name on Card</FormLabel>
                         <FormControl>
-                          <Input placeholder="MM/YY" {...field} />
+                          <Input placeholder="Your Name" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
-                   <FormField
+                  <FormField
                     control={form.control}
-                    name="cvc"
+                    name="cardNumber"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>CVC</FormLabel>
+                        <FormLabel>Card Number</FormLabel>
                         <FormControl>
-                          <Input placeholder="123" {...field} />
+                          <Input placeholder="•••• •••• •••• ••••" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
+                  <div className="grid grid-cols-2 gap-4">
+                    <FormField
+                      control={form.control}
+                      name="expiryDate"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Expiry Date</FormLabel>
+                          <FormControl>
+                            <Input placeholder="MM/YY" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="cvc"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>CVC</FormLabel>
+                          <FormControl>
+                            <Input placeholder="123" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
                 </div>
-              </form>
-            </Form>
+              )}
+              {watchPaymentMethod === "momo" && (
+                <div className="space-y-4 animate-in fade-in-0 duration-500">
+                  <FormField
+                    control={form.control}
+                    name="mobileMoneyNumber"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Mobile Money Number</FormLabel>
+                        <FormControl>
+                          <Input placeholder="024 123 4567" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                   <Alert>
+                      <AlertTitle>How to Pay</AlertTitle>
+                      <AlertDescription>
+                        After confirming, you will receive a payment prompt on the provided mobile number to complete the transaction.
+                      </AlertDescription>
+                    </Alert>
+                </div>
+              )}
+              </div>
           </CardContent>
         </Card>
         
