@@ -17,7 +17,6 @@ import { navLinks } from "@/lib/data";
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
-  const isHomePage = pathname === "/";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -30,7 +29,7 @@ export default function Header() {
   const NavLinkItems = () => (
     <>
       {navLinks.map((link) => {
-        const href = isHomePage || link.href === '/' ? link.href : `/${link.href}`;
+        const href = link.href.startsWith("#") && pathname !== "/" ? `/${link.href}` : link.href;
         return (
           <Link
             key={link.href}
@@ -88,7 +87,7 @@ export default function Header() {
                 </Link>
                 <nav className="flex flex-col gap-4">
                   {navLinks.map((link) => {
-                    const href = isHomePage || link.href === '/' ? link.href : `/${link.href}`;
+                     const href = link.href.startsWith("#") && pathname !== "/" ? `/${link.href}` : link.href;
                     return (
                      <SheetClose asChild key={link.href}>
                         <Link

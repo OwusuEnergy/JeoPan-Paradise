@@ -135,16 +135,8 @@ export default function GallerySection() {
     filter === "All" ? rooms : rooms.filter((room) => room.type === filter);
 
   return (
-    <section id="rooms" className="bg-background/70">
+    <section id="rooms">
       <div className="container px-4 md:px-6">
-        <div className="mb-12 text-center">
-          <h2 className={cn("font-headline text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl")}>
-            Rooms & Suites
-          </h2>
-          <p className="mx-auto mt-4 max-w-[700px] text-muted-foreground md:text-xl">
-            Choose your perfect sanctuary. From social dorms to luxurious private suites, every space is designed for comfort.
-          </p>
-        </div>
         <div className="mb-8 flex justify-center gap-2">
           {roomTypes.map((type) => (
             <Button

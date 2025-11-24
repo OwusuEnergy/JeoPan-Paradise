@@ -177,6 +177,7 @@ export const experiences: Experience[] = [
 
 export const navLinks = [
     { href: "/", label: "Home" },
+    { href: "/gallery", label: "Gallery" },
     { href: "#rooms", label: "Rooms" },
     { href: "#experience", label: "Experience" },
     { href: "#features", label: "About" },
