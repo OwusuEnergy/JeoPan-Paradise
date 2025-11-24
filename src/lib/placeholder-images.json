@@ -2,9 +2,9 @@
   "placeholderImages": [
     {
       "id": "hero-background",
-      "description": "Lush hostel common area with hammocks and happy travelers.",
-      "imageUrl": "https://images.unsplash.com/photo-1638828229405-8db92ff35af6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8aG9zdGVsJTIwY29tbW9uJTIwYXJlYXxlbnwwfHx8fDE3NjM5MzY5NDJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "hostel common area"
+      "description": "Exterior view of the Jeopan Paradise Hostel.",
+      "imageUrl": "https://lh3.googleusercontent.com/p/AF1QipOx8vApwZ1li6BzOUjDyAg9KTW_6JRJs5r1UWaf=s680-w680-h510-rw",
+      "imageHint": "hostel exterior"
     },
     {
       "id": "room-dorm-1",
