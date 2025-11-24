@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { findImage } from "@/lib/utils";
 import { ArrowDown } from "lucide-react";
@@ -43,8 +44,9 @@ export default function HeroSection() {
             size="lg"
             variant="destructive"
             className="h-12 px-8 text-lg animate-pulse-glow"
+            asChild
           >
-            Book Your Stay
+            <Link href="/checkout">Book Your Stay</Link>
           </Button>
         </div>
       </div>

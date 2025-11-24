@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { findImage } from "@/lib/utils";
 import { cn } from "@/lib/utils";
@@ -26,8 +27,8 @@ export default function CtaSection() {
                 <p className="mt-4 max-w-2xl text-lg md:text-xl">
                 Your adventure awaits. Secure your spot in paradise today.
                 </p>
-                <Button size="lg" variant="destructive" className="mt-8 h-12 px-8 text-lg animate-pulse-glow">
-                Book Now
+                <Button size="lg" variant="destructive" className="mt-8 h-12 px-8 text-lg animate-pulse-glow" asChild>
+                  <Link href="/checkout">Book Now</Link>
                 </Button>
             </div>
       </div>

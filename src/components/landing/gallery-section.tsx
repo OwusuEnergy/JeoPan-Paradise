@@ -2,6 +2,7 @@
 
 import { useState, useRef } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import Autoplay from "embla-carousel-autoplay";
 import { rooms } from "@/lib/data";
 import type { Room, RoomType } from "@/lib/types";
@@ -102,7 +103,7 @@ const RoomCard = ({ room }: { room: Room }) => {
               <DialogTitle className={cn("font-headline text-3xl mt-2")}>{room.name}</DialogTitle>
             </DialogHeader>
             <p className="mt-4 text-3xl font-semibold text-primary">
-              ${room.price}
+              GHS{room.price}
               <span className="text-sm font-normal text-muted-foreground">/night</span>
             </p>
             <DialogDescription className="mt-4 text-base">
@@ -116,7 +117,9 @@ const RoomCard = ({ room }: { room: Room }) => {
                 </li>
               ))}
             </ul>
-            <Button size="lg" variant="destructive" className="mt-auto">Book Now</Button>
+            <Button size="lg" variant="destructive" className="mt-auto" asChild>
+                <Link href="/checkout">Book Now</Link>
+            </Button>
           </div>
         </div>
       </DialogContent>

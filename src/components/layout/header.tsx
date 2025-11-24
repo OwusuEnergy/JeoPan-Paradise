@@ -58,7 +58,9 @@ export default function Header() {
           <NavLinkItems />
         </nav>
         <div className="flex flex-1 items-center justify-end gap-4">
-          <Button variant="destructive" className="hidden sm:inline-flex">Book Now</Button>
+          <Button variant="destructive" className="hidden sm:inline-flex" asChild>
+            <Link href="/checkout">Book Now</Link>
+          </Button>
           <Sheet>
             <SheetTrigger asChild>
               <Button variant="outline" size="icon" className="md:hidden">
@@ -91,7 +93,9 @@ export default function Header() {
                   ))}
                 </nav>
                  <SheetClose asChild>
-                    <Button variant="destructive" size="lg">Book Now</Button>
+                    <Button variant="destructive" size="lg" asChild>
+                        <Link href="/checkout">Book Now</Link>
+                    </Button>
                 </SheetClose>
               </div>
             </SheetContent>
