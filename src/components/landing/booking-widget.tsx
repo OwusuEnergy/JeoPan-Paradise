@@ -87,9 +87,15 @@ export default function BookingWidget() {
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      if (currentScrollY > lastScrollY.current && currentScrollY > 200) { // Scrolling down
-        setIsExpanded(false);
-      } else if (currentScrollY < lastScrollY.current) { // Scrolling up
+      const scrollDifference = currentScrollY - lastScrollY.current;
+
+      if (currentScrollY > 200) {
+        if (scrollDifference > 5) { // Scrolling down
+          setIsExpanded(false);
+        } else if (scrollDifference < -5) { // Scrolling up
+          setIsExpanded(true);
+        }
+      } else {
         setIsExpanded(true);
       }
       lastScrollY.current = currentScrollY;
