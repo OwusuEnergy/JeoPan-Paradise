@@ -3,6 +3,7 @@ import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { cn } from "@/lib/utils";
+import FloatingChatWidget from "@/components/layout/floating-chat-widget";
 
 const fontInter = Inter({
   subsets: ["latin"],
@@ -52,6 +53,7 @@ export default function RootLayout({
         </svg>
         {children}
         <Toaster />
+        <FloatingChatWidget />
       </body>
     </html>
   );
