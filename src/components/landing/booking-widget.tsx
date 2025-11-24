@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -81,6 +81,21 @@ export default function BookingWidget() {
   const [availability, setAvailability] = useState<AvailabilityStatus>("idle");
   const [suggestedDate, setSuggestedDate] = useState<Date | null>(null);
   const [isExpanded, setIsExpanded] = useState(true);
+  const lastScrollY = useRef(0);
+
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      if (currentScrollY > lastScrollY.current && currentScrollY > 200) { // Scrolling down
+        setIsExpanded(false);
+      }
+      lastScrollY.current = currentScrollY;
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const form = useForm<BookingFormValues>({
     resolver: zodResolver(bookingFormSchema),
