@@ -89,6 +89,8 @@ export default function BookingWidget() {
       const currentScrollY = window.scrollY;
       if (currentScrollY > lastScrollY.current && currentScrollY > 200) { // Scrolling down
         setIsExpanded(false);
+      } else if (currentScrollY < lastScrollY.current) { // Scrolling up
+        setIsExpanded(true);
       }
       lastScrollY.current = currentScrollY;
     };
