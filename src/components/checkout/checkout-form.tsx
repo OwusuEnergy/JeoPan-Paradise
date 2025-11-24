@@ -1,9 +1,11 @@
+
 "use client";
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { format } from "date-fns";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -42,7 +44,8 @@ import {
   Calendar as CalendarIcon,
   Users,
 } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn, findImage } from "@/lib/utils";
+import { rooms } from "@/lib/data";
 
 const checkoutFormSchema = z.object({
   dates: z
@@ -88,6 +91,10 @@ export default function CheckoutForm() {
 
   const watchDates = form.watch("dates");
   const watchGuests = form.watch("guests");
+  const watchRoomType = form.watch("roomType");
+
+  const selectedRoom = rooms.find(room => room.name === watchRoomType);
+  const roomImage = selectedRoom ? findImage(selectedRoom.imageIds[0]) : null;
 
   function onSubmit(values: z.infer<typeof checkoutFormSchema>) {
     console.log(values);
@@ -108,7 +115,7 @@ export default function CheckoutForm() {
   }
 
   const nights = calculateNights();
-  const pricePerNight = 120; // Example price
+  const pricePerNight = selectedRoom?.price || 0;
   const subtotal = nights * pricePerNight;
   const taxes = subtotal * 0.13;
   const total = subtotal + taxes;
@@ -216,12 +223,11 @@ export default function CheckoutForm() {
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          <SelectItem value="The Voyager's Bunk">Dormitory - The Voyager's Bunk</SelectItem>
-                          <SelectItem value="The Social Sleeper">Dormitory - The Social Sleeper</SelectItem>
-                          <SelectItem value="The Bohemian Hideaway">Private Room - The Bohemian Hideaway</SelectItem>
-                          <SelectItem value="The Garden Oasis">Private Room - The Garden Oasis</SelectItem>
-                          <SelectItem value="The Paradise Suite">Suite - The Paradise Suite</SelectItem>
-                          <SelectItem value="The Luxe Loft">Suite - The Luxe Loft</SelectItem>
+                          {rooms.map(room => (
+                            <SelectItem key={room.id} value={room.name}>
+                              {room.type} - {room.name}
+                            </SelectItem>
+                          ))}
                         </SelectContent>
                       </Select>
                       <FormMessage />
@@ -291,9 +297,22 @@ export default function CheckoutForm() {
         <Card>
             <CardHeader>
                 <CardTitle>Booking Summary</CardTitle>
-                <CardDescription>{form.getValues("roomType")}</CardDescription>
+                {selectedRoom && (
+                  <CardDescription>{selectedRoom.name} - {selectedRoom.type}</CardDescription>
+                )}
             </CardHeader>
             <CardContent className="space-y-4">
+              {roomImage && (
+                <div className="relative aspect-video overflow-hidden rounded-lg">
+                  <Image 
+                    src={roomImage.imageUrl} 
+                    alt={selectedRoom?.name || ""} 
+                    fill
+                    className="object-cover"
+                    data-ai-hint={roomImage.imageHint}
+                  />
+                </div>
+              )}
                 <div className="flex justify-between">
                     <span>Check-in:</span>
                     <span>{watchDates?.from ? format(watchDates.from, "LLL dd, yyyy") : 'N/A'}</span>
@@ -310,7 +329,7 @@ export default function CheckoutForm() {
                 {nights > 0 && (
                 <>
                 <div className="flex justify-between font-semibold">
-                    <span>{nights} night{nights > 1 && 's'}</span>
+                    <span>{nights} night{nights > 1 && 's'} x GHS{pricePerNight.toFixed(2)}</span>
                     <span>GHS{subtotal.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between">
@@ -401,3 +420,5 @@ export default function CheckoutForm() {
       </div>
     </div>
   );
+
+    
