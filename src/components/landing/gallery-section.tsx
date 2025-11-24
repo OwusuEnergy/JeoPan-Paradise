@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Image from "next/image";
+import Autoplay from "embla-carousel-autoplay";
 import { rooms } from "@/lib/data";
 import type { Room, RoomType } from "@/lib/types";
 import { Button } from "@/components/ui/button";
@@ -36,6 +37,9 @@ const roomTypes: ("All" | RoomType)[] = [
 const RoomCard = ({ room }: { room: Room }) => {
   const image = findImage(room.imageIds[0]);
   const galleryImages = room.imageIds.map(id => findImage(id)).filter(Boolean);
+  const plugin = useRef(
+    Autoplay({ delay: 3000, stopOnInteraction: true })
+  );
 
   return (
     <Dialog>
@@ -65,7 +69,12 @@ const RoomCard = ({ room }: { room: Room }) => {
       <DialogContent className="sm:max-w-3xl">
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           <div>
-            <Carousel className="w-full">
+            <Carousel 
+              plugins={[plugin.current]}
+              className="w-full"
+              onMouseEnter={plugin.current.stop}
+              onMouseLeave={plugin.current.reset}
+            >
               <CarouselContent>
                 {galleryImages.map((img, index) => (
                     img && (
