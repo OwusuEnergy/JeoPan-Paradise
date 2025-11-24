@@ -63,9 +63,6 @@ const RoomCard = ({ room }: { room: Room }) => {
             <h3 className="font-semibold">{room.name}</h3>
             <p className="text-sm text-muted-foreground">{room.type}</p>
           </CardContent>
-          <div className="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-            <Button variant="secondary">View Details</Button>
-          </div>
         </Card>
       </DialogTrigger>
       <DialogContent className="sm:max-w-3xl">
