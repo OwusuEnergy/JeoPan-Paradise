@@ -13,8 +13,13 @@ const WhatsAppIcon = (props: React.SVGProps<SVGSVGElement>) => (
 
 
 const TikTokIcon = (props: React.SVGProps<SVGSVGElement>) => (
-    <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
-        <path d="M16.6 5.82h2.75v5.1h-2.75V5.82ZM13.84 5.82h2.75v11.3h-2.75V5.82h.01Z M12.98 10.3c-1.11 0-2.11-.4-2.88-1.13V17.1h-2.75V8.58c1.6.95 3.51 1.13 5.63 1.13v2.86c-1.47-.28-2.92-.85-4.22-1.66v2.86c.96.53 2.05.8 3.19.8.52 0 1.04-.08 1.54-.25v2.87c-.5.11-1.02.17-1.54.17Z"/>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28.53 32.55" {...props}>
+        <g fillRule="evenodd" clipRule="evenodd">
+            <path fill="#ff0050" d="M20.66 0v14.11c0 2.39-1.93 4.33-4.33 4.33s-4.33-1.93-4.33-4.33V0h-4.44v14.11c0 4.85 3.93 8.78 8.78 8.78 4.85 0 8.78-3.93 8.78-8.78V0h-4.46z"/>
+            <path fill="#00f2ea" d="M28.53 0v14.11c0 2.39-1.93 4.33-4.33 4.33s-4.33-1.93-4.33-4.33V0h-4.44v14.11c0 4.85 3.93 8.78 8.78 8.78 4.85 0 8.78-3.93 8.78-8.78V0h-4.46z"/>
+            <path fill="#fff" d="M20.66 6.38v7.74c0 2.39-1.93 4.33-4.33 4.33s-4.33-1.93-4.33-4.33V2.91h4.44v10.64c0 .54.44.97.97.97.54 0 .97-.44.97-.97V6.38h4.33z"/>
+            <path d="M12.06 14.11c0 4.85 3.93 8.78 8.78 8.78 4.85 0 8.78-3.93 8.78-8.78V0h-4.44v14.11c0 2.39-1.93 4.33-4.33 4.33s-4.33-1.93-4.33-4.33V0H7.62v14.11c0 4.85 3.93 8.78 8.78 8.78s8.78-3.93 8.78-8.78V4.44h4.44v9.67c0 7.25-5.9 13.15-13.22 13.15-7.32 0-13.22-5.9-13.22-13.15V4.44h4.44v9.67z"/>
+        </g>
     </svg>
 );
 
@@ -37,9 +42,9 @@ export default function FloatingChatWidget() {
               <span className="sr-only">WhatsApp</span>
             </a>
           </Button>
-          <Button asChild size="icon" className="rounded-full bg-black hover:bg-gray-800 text-white w-12 h-12">
+          <Button asChild size="icon" className="rounded-full bg-black hover:bg-gray-800 text-white w-12 h-12 p-2.5">
             <a href="https://www.tiktok.com/@yourprofile" target="_blank" rel="noopener noreferrer">
-                <TikTokIcon className="w-6 h-6" />
+                <TikTokIcon className="w-full h-full" />
                 <span className="sr-only">TikTok</span>
             </a>
           </Button>
