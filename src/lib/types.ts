@@ -25,12 +25,26 @@ export interface Testimonial {
   imageId: string;
 }
 
+export interface BlogComment {
+    id: string;
+    author: string;
+    authorImageId: string;
+    date: string;
+    text: string;
+}
+
 export interface BlogPost {
   id: string;
   title: string;
   excerpt: string;
   imageId: string;
   href: string;
+  author: string;
+  authorImageId: string;
+  date: string;
+  content: string;
+  relatedPostIds: string[];
+  comments: BlogComment[];
 }
 
 export interface Experience {
