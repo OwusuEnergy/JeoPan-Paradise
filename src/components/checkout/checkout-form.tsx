@@ -4,7 +4,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { format } from "date-fns";
+import { format, addDays } from "date-fns";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import {
@@ -43,9 +43,12 @@ import {
   BedDouble,
   Calendar as CalendarIcon,
   Users,
+  CheckCircle2,
+  XCircle,
 } from "lucide-react";
 import { cn, findImage } from "@/lib/utils";
 import { rooms } from "@/lib/data";
+import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 
 const checkoutFormSchema = z.object({
   checkin: z.date({ required_error: "Check-in date is required." }),
@@ -70,6 +73,19 @@ const checkoutFormSchema = z.object({
   path: ["checkout"],
 });
 
+type AvailabilityStatus = "available" | "unavailable" | "idle";
+
+const getMockUnavailableDates = () => {
+  const today = new Date();
+  const nextFriday = new Date(today);
+  nextFriday.setDate(today.getDate() + ((5 - today.getDay() + 7) % 7));
+  return [
+    new Date(nextFriday),
+    addDays(nextFriday, 1),
+    addDays(nextFriday, 2),
+  ];
+};
+const unavailableDates = getMockUnavailableDates();
 
 export default function CheckoutForm() {
   const { toast } = useToast();
@@ -97,8 +113,52 @@ export default function CheckoutForm() {
   const selectedRoom = rooms.find(room => room.name === watchRoomType);
   const roomImage = selectedRoom ? findImage(selectedRoom.imageIds[0]) : null;
 
+  const [availability, setAvailability] = React.useState<AvailabilityStatus>("idle");
+  const [suggestedDate, setSuggestedDate] = React.useState<Date | null>(null);
+
+  function checkAvailability(from: Date, to: Date): boolean {
+    if (!from || !to) return true;
+    const fromDay = new Date(from.setHours(0,0,0,0));
+    return !unavailableDates.some(unavailableDate => 
+      fromDay.getTime() === unavailableDate.getTime()
+    );
+  }
+
+  function getNextAvailableDate(from: Date): Date {
+      let nextDate = addDays(from, 1);
+      while(!checkAvailability(nextDate, addDays(nextDate, 1))) {
+        nextDate = addDays(nextDate, 1);
+      }
+      return nextDate;
+  }
+
+  React.useEffect(() => {
+    if (watchCheckin && watchCheckout) {
+      const isAvailable = checkAvailability(watchCheckin, watchCheckout);
+      if (isAvailable) {
+        setAvailability("available");
+        setSuggestedDate(null);
+      } else {
+        setAvailability("unavailable");
+        setSuggestedDate(getNextAvailableDate(watchCheckin));
+      }
+    } else {
+      setAvailability("idle");
+    }
+  }, [watchCheckin, watchCheckout]);
+
   function onSubmit(values: z.infer<typeof checkoutFormSchema>) {
     console.log(values);
+    
+    if (availability === 'unavailable') {
+        toast({
+            variant: "destructive",
+            title: "Unavailable Dates",
+            description: "Please select an available date range before booking.",
+        });
+        return;
+    }
+
     toast({
       title: "Booking Confirmed!",
       description: "Your trip to paradise is booked. We've sent a confirmation to your email.",
@@ -214,6 +274,27 @@ export default function CheckoutForm() {
                   )}
                 />
               </div>
+
+               {availability === 'available' && watchCheckin && watchCheckout && (
+                <Alert className="border-green-500 text-green-700">
+                  <CheckCircle2 className="h-4 w-4 !text-green-500" />
+                  <AlertTitle>Dates Available!</AlertTitle>
+                  <AlertDescription>
+                    Good news! This room is available for your selected dates.
+                  </AlertDescription>
+                </Alert>
+              )}
+
+              {availability === 'unavailable' && suggestedDate && (
+                 <Alert variant="destructive">
+                  <XCircle className="h-4 w-4" />
+                  <AlertTitle>Unavailable Dates</AlertTitle>
+                  <AlertDescription>
+                    Unfortunately, this room is booked for your selected check-in date. The next available check-in is {format(suggestedDate, "EEEE, LLL dd")}. Please try new dates.
+                  </AlertDescription>
+                </Alert>
+              )}
+
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                  <FormField
                   control={form.control}
@@ -450,10 +531,12 @@ export default function CheckoutForm() {
           </CardContent>
         </Card>
         
-        <Button type="submit" form="checkout-form" size="lg" className="w-full">
+        <Button type="submit" form="checkout-form" size="lg" className="w-full" disabled={availability === 'unavailable'}>
             Confirm and Pay
         </Button>
       </div>
     </div>
   );
 }
+
+    
