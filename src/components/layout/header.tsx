@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu, Palmtree } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -15,6 +16,8 @@ import { navLinks } from "@/lib/data";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
+  const isHomePage = pathname === "/";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,7 +32,7 @@ export default function Header() {
       {navLinks.map((link) => (
         <Link
           key={link.href}
-          href={link.href}
+          href={isHomePage ? link.href : `/${link.href}`}
           className="text-sm font-medium transition-colors hover:text-primary"
         >
           {link.label}
@@ -48,7 +51,7 @@ export default function Header() {
       )}
     >
       <div className="container flex h-16 items-center px-4 md:px-6">
-        <Link href="#" className="mr-6 flex items-center gap-2" prefetch={false}>
+        <Link href="/" className="mr-6 flex items-center gap-2" prefetch={false}>
           <Palmtree className="h-6 w-6 text-primary" />
           <span className="font-headline text-lg font-semibold tracking-wide text-primary">
             Jeopan Paradise
@@ -71,7 +74,7 @@ export default function Header() {
             <SheetContent side="right">
               <div className="flex flex-col gap-6 p-6">
                 <Link
-                  href="#"
+                  href="/"
                   className="flex items-center gap-2"
                   prefetch={false}
                 >
@@ -84,7 +87,7 @@ export default function Header() {
                   {navLinks.map((link) => (
                      <SheetClose asChild key={link.href}>
                         <Link
-                          href={link.href}
+                          href={isHomePage ? link.href : `/${link.href}`}
                           className="text-lg font-medium transition-colors hover:text-primary"
                         >
                           {link.label}
