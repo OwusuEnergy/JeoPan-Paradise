@@ -48,12 +48,8 @@ import { cn, findImage } from "@/lib/utils";
 import { rooms } from "@/lib/data";
 
 const checkoutFormSchema = z.object({
-  dates: z
-    .object({
-      from: z.date({ required_error: "Check-in date is required." }),
-      to: z.date({ required_error: "Check-out date is required." }),
-    })
-    .refine((data) => data.from && data.to, "Both dates are required"),
+  checkin: z.date({ required_error: "Check-in date is required." }),
+  checkout: z.date({ required_error: "Check-out date is required." }),
   guests: z.string().min(1, "Please select number of guests."),
   roomType: z.string().min(1, "Please select a room type."),
   firstName: z.string().min(1, "First name is required"),
@@ -69,7 +65,11 @@ const checkoutFormSchema = z.object({
     .string()
     .regex(/^(0[1-9]|1[0-2])\/?([0-9]{4}|[0-9]{2})$/, "Invalid expiry date (MM/YY)"),
   cvc: z.string().min(3, "CVC must be 3 digits").max(4, "CVC can be up to 4 digits"),
+}).refine(data => data.checkout > data.checkin, {
+  message: "Check-out date must be after check-in date.",
+  path: ["checkout"],
 });
+
 
 export default function CheckoutForm() {
   const { toast } = useToast();
@@ -89,7 +89,8 @@ export default function CheckoutForm() {
     },
   });
 
-  const watchDates = form.watch("dates");
+  const watchCheckin = form.watch("checkin");
+  const watchCheckout = form.watch("checkout");
   const watchGuests = form.watch("guests");
   const watchRoomType = form.watch("roomType");
 
@@ -106,8 +107,8 @@ export default function CheckoutForm() {
   }
 
   const calculateNights = () => {
-    if (watchDates?.from && watchDates?.to) {
-      const diffTime = Math.abs(watchDates.to.getTime() - watchDates.from.getTime());
+    if (watchCheckin && watchCheckout) {
+      const diffTime = Math.abs(watchCheckout.getTime() - watchCheckin.getTime());
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
       return diffDays > 0 ? diffDays : 0;
     }
@@ -132,10 +133,10 @@ export default function CheckoutForm() {
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <FormField
                   control={form.control}
-                  name="dates"
+                  name="checkin"
                   render={({ field }) => (
                     <FormItem className="flex flex-col">
-                      <FormLabel>Check-in / Check-out</FormLabel>
+                      <FormLabel>Check-in Date</FormLabel>
                       <Popover>
                         <PopoverTrigger asChild>
                           <FormControl>
@@ -143,39 +144,27 @@ export default function CheckoutForm() {
                               variant={"outline"}
                               className={cn(
                                 "w-full justify-start text-left font-normal",
-                                !field.value?.from && "text-muted-foreground"
+                                !field.value && "text-muted-foreground"
                               )}
                             >
                               <CalendarIcon className="mr-2 h-4 w-4" />
-                              {field.value?.from ? (
-                                field.value.to ? (
-                                  <>
-                                    {format(field.value.from, "LLL dd, y")} -{" "}
-                                    {format(field.value.to, "LLL dd, y")}
-                                  </>
-                                ) : (
-                                  format(field.value.from, "LLL dd, y")
-                                )
+                              {field.value ? (
+                                format(field.value, "LLL dd, y")
                               ) : (
-                                <span>Pick a date range</span>
+                                <span>Pick a date</span>
                               )}
                             </Button>
                           </FormControl>
                         </PopoverTrigger>
                         <PopoverContent className="w-auto p-0" align="start">
                           <Calendar
-                            initialFocus
-                            mode="range"
-                            defaultMonth={field.value?.from}
-                            selected={{
-                              from: field.value?.from,
-                              to: field.value?.to,
-                            }}
+                            mode="single"
+                            selected={field.value}
                             onSelect={field.onChange}
-                            numberOfMonths={1}
                             disabled={(date) =>
                               date < new Date(new Date().setHours(0, 0, 0, 0))
                             }
+                            initialFocus
                           />
                         </PopoverContent>
                       </Popover>
@@ -183,6 +172,49 @@ export default function CheckoutForm() {
                     </FormItem>
                   )}
                 />
+                 <FormField
+                  control={form.control}
+                  name="checkout"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col">
+                      <FormLabel>Check-out Date</FormLabel>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <FormControl>
+                            <Button
+                              variant={"outline"}
+                              className={cn(
+                                "w-full justify-start text-left font-normal",
+                                !field.value && "text-muted-foreground"
+                              )}
+                            >
+                              <CalendarIcon className="mr-2 h-4 w-4" />
+                              {field.value ? (
+                                format(field.value, "LLL dd, y")
+                              ) : (
+                                <span>Pick a date</span>
+                              )}
+                            </Button>
+                          </FormControl>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0" align="start">
+                          <Calendar
+                            mode="single"
+                            selected={field.value}
+                            onSelect={field.onChange}
+                            disabled={(date) =>
+                              date < (watchCheckin || new Date(new Date().setHours(0, 0, 0, 0)))
+                            }
+                            initialFocus
+                          />
+                        </PopoverContent>
+                      </Popover>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                  <FormField
                   control={form.control}
                   name="guests"
@@ -208,7 +240,6 @@ export default function CheckoutForm() {
                     </FormItem>
                   )}
                 />
-              </div>
                <FormField
                   control={form.control}
                   name="roomType"
@@ -234,6 +265,7 @@ export default function CheckoutForm() {
                     </FormItem>
                   )}
                 />
+                </div>
               <div className="grid grid-cols-2 gap-4">
                 <FormField
                   control={form.control}
@@ -315,11 +347,11 @@ export default function CheckoutForm() {
               )}
                 <div className="flex justify-between">
                     <span>Check-in:</span>
-                    <span>{watchDates?.from ? format(watchDates.from, "LLL dd, yyyy") : 'N/A'}</span>
+                    <span>{watchCheckin ? format(watchCheckin, "LLL dd, yyyy") : 'N/A'}</span>
                 </div>
                 <div className="flex justify-between">
                     <span>Check-out:</span>
-                    <span>{watchDates?.to ? format(watchDates.to, "LLL dd, yyyy") : 'N/A'}</span>
+                    <span>{watchCheckout ? format(watchCheckout, "LLL dd, yyyy") : 'N/A'}</span>
                 </div>
                 <div className="flex justify-between">
                     <span>Guests:</span>
@@ -425,3 +457,5 @@ export default function CheckoutForm() {
     </div>
   );
 }
+
+    
